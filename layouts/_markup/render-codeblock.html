@@ -1,0 +1,8 @@
+{{- if eq .Type "mermaid" -}}
+  <div class="mermaid">
+    {{- .Inner | safeHTML -}}
+  </div>
+  {{- .Page.Store.Set "hasMermaid" true -}}
+{{- else -}}
+  <pre><code class="language-{{ .Type | default "text" }}">{{ .Inner | htmlEscape }}</code></pre>
+{{- end -}}

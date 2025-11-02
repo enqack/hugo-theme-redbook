@@ -1,0 +1,12 @@
+{{- /* Only include if the page actually has Mermaid diagrams */ -}}
+{{- if .Page.Store.Get "hasMermaid" }}
+  {{- $opts := dict
+      "targetPath" "js/mermaid.bundle.js"
+      "minify" true
+      "format" "esm"
+      "sourcemap" (cond (eq hugo.Environment "development") "inline" false)
+  -}}
+  {{- $entry := resources.Get "js/mermaid.js" -}}
+  {{- $bundle := $entry | js.Build (dict "params" $opts) | fingerprint -}}
+  <script type="module" src="{{ $bundle.RelPermalink }}" integrity="{{ $bundle.Data.Integrity }}"></script>
+{{- end -}}

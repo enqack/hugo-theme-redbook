@@ -1,0 +1,20 @@
+{{- with resources.Get "js/main.js" }}
+  {{- $opts := dict
+    "minify" (not hugo.IsDevelopment)
+    "sourceMap" (cond hugo.IsDevelopment "external" "")
+    "targetPath" "js/main.js"
+  }}
+  {{- with . | js.Build (dict "params" $opts) }}
+    {{- if hugo.IsDevelopment }}
+      <script src="{{ .RelPermalink }}"></script>
+    {{- else }}
+      {{- with . | fingerprint }}
+        <script src="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous"></script>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{ $opts := dict "targetPath" "js/app.js" "minify" (not hugo.IsDevelopment) "sourceMap" "inline" }}
+{{ $wa := resources.Get "js/webawesome.js" | js.Build (dict "params" $opts) }}
+<script type="module" src="{{ $wa.RelPermalink }}"></script>

@@ -1,0 +1,20 @@
+{{/* Normalize page object from either local dot or root. */}}
+{{ $p := or .Page $.Page }}
+{{ if not $p }}{{/* No page context available: bail gracefully */}}{{ end }}
+
+{{ $df := or $.Site.Params.dateFormat $.Site.Params.dateformat | default "2 Jan 2006" }}
+
+{{/* Published: prefer Date, then PublishDate */}}
+{{ $pub := $p.Date }}
+{{ if $pub.IsZero }}{{ $pub = $p.PublishDate }}{{ end }}
+
+{{/* Last modified */}}
+{{ $mod := $p.Lastmod }}
+
+{{ if not $pub.IsZero }}
+  <p><i>Published: {{ $pub.Format $df }}</i></p>
+{{ end }}
+
+{{ if and (not $mod.IsZero) (ne ($mod.Format "2006-01-02") ($pub.Format "2006-01-02")) }}
+  <p><i>Last updated: {{ $mod.Format $df }}</i></p>
+{{ end }}

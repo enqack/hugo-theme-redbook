@@ -1,0 +1,10 @@
+{{ if .Site.Params.sidebar.enabled  | default true }}
+<div class="sidebar">
+{{ if eq .Site.Params.sidebar.menu_style "static-menu" }}
+  {{- partial "sidebar/static-menu.html" . -}}
+{{ end }}
+  <div class="sidebar-footer">
+  {{- partial "sidebar/footer.html" . -}}
+  </div>
+</div>
+{{ end }}

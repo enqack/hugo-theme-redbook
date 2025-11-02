@@ -1,0 +1,43 @@
+# Hugo build output
+/public/
+/resources/
+/hugo_stats.json
+
+# Build artifacts
+*.log
+*.bak
+*.tmp
+*.swp
+*.DS_Store
+Thumbs.db
+
+# Hugo themes (if you use Git submodules, remove /themes/)
+themes/*
+
+# Node-related (if using npm/yarn for pipelines)
+node_modules/
+/yarn.lock
+/.npm
+/.pnp
+.pnp.js
+
+# OS-specific
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Environment & local overrides
+.env
+.env.*
+
+# Deployment & CI
+.netlify/
+.vercel/
+firebase.json

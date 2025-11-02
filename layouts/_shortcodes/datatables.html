@@ -1,0 +1,216 @@
+{{/* datatables.html — robust DataTables shortcode:
+     - Supports page resource="file.json"
+     - Fenced ```json``` or ```yaml``` blocks
+     - Works with arrays or objects
+     - Auto-builds table when none provided
+     - Supports columns="A,B,C" param for order and header synthesis
+*/}}
+
+{{- $inner := .InnerDeindent -}}
+
+{{/* ---------- Base setup ---------- */}}
+{{- $class := .Get "class" | default "DataTables" -}}
+{{- $theme := .Get "theme" | default "" -}}
+{{- $themeClass := "" -}}
+{{- if $theme -}}
+  {{- $themeClass = printf "%s--%s" $class $theme -}}
+  {{- $class = printf "%s %s" $class $themeClass -}}
+{{- end -}}
+
+{{/* Collect data-* attributes */}}
+{{- $attrs := slice -}}
+{{- range $k, $v := .Params -}}
+  {{- if and (ne $k "class") (ne $k "theme") (ne $k "resource") (ne $k "columns") -}}
+    {{- $attrs = $attrs | append (printf "data-%s=\"%s\"" $k $v) -}}
+  {{- end -}}
+{{- end -}}
+{{- $attrString := delimit $attrs " " -}}
+
+{{/* ---------- Read columns param ---------- */}}
+{{- $columnsParam := .Get "columns" | default "" -}}
+{{- $columnsList := slice -}}
+{{- if $columnsParam -}}
+  {{- range (split $columnsParam ",") -}}
+    {{- $columnsList = $columnsList | append (trim . " \t\r\n") -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* ---------- Load JSON ---------- */}}
+{{- $content := trim $inner "\n\r\t " -}}
+{{- $json := "" -}}
+
+{{/* 1) Resource param (page, data, or assets) */}}
+{{- with .Get "resource" -}}
+  {{- $path := . -}}
+
+  {{/* a) Try as page resource (page bundle) */}}
+  {{- $page := $.Page -}}
+  {{- if $page -}}
+    {{- with $page.Resources -}}                 {{/* only runs if .Resources exists */}}
+      {{- with .Get $path -}}
+        {{- $json = .Content -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- if not $json -}}
+    {{/* b) Try as site data (data/ directory) */}}
+    {{- $trim := replace (replace $path ".json" "") "^/data/" "" -}}
+    {{- $trim = replace $trim "\\" "/" -}}
+    {{- $parts := split $trim "/" -}}
+
+    {{- $data := index site.Data $parts | default nil -}}
+    {{- if $data -}}
+      {{- $json = $data -}}
+    {{- else -}}
+      {{/* c) Try as assets resource */}}
+      {{- $assetPath := replace $path "^/assets/" "" -}}
+      {{- if $assetPath -}}
+        {{- $res := resources.Get $assetPath | default nil -}}
+        {{- if and $res (ne (printf "%T" $res) "<nil>") -}}
+          {{- $json = $res.Content -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* 2) Fenced block fallback */}}
+{{- if not $json -}}
+  {{- $jsonBlock := findRE "(?s)```(?:json|ya?ml)?\\s*(\\{.*?\\}|\\[.*?\\]|[A-Za-z_].*?:.*?)\\s*```" $content -}}
+  {{- if $jsonBlock -}}
+    {{- $json = trim (index $jsonBlock 1) "\n\r\t " -}}
+    {{- $content = trim (replaceRE "(?s)```(?:json|ya?ml)?\\s*(\\{.*?\\}|\\[.*?\\]|[A-Za-z_].*?:.*?)\\s*```" "" $content) "\n\r\t " -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* 3) Auto-discover single JSON resource */}}
+{{- if not $json -}}
+  {{- $matches := .Page.Resources.Match "*.json" -}}
+  {{- if eq (len $matches) 1 -}}
+    {{- $json = (index $matches 0).Content -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* ---------- Convert markdown table ---------- */}}
+{{- $isHTMLTable := findRE "<table" $content -}}
+{{- if not $isHTMLTable -}}
+  {{- $content = $content | markdownify -}}
+{{- end -}}
+
+{{/* ---------- Build table if needed ---------- */}}
+{{- $hasAnyTH := gt (len (findRE "<th[^>]*>" $content)) 0 -}}
+{{- if and (not $hasAnyTH) (gt (len $columnsList) 0) -}}
+  {{- $ths := slice -}}
+  {{- range $columnsList -}}
+    {{- $ths = $ths | append (printf "<th>%s</th>" .) -}}
+  {{- end -}}
+  {{- $thead := printf "<thead><tr>%s</tr></thead>" (delimit $ths "") -}}
+  {{- $content = printf "<table class=\"%s\" %s>%s<tbody></tbody></table>" $class $attrString $thead -}}
+{{- end -}}
+
+{{/* ---------- Inject attributes ---------- */}}
+{{- $pattern := "<table([^>]*)>" -}}
+{{- $replacement := printf "<table class=\"%s\" %s$1>" $class $attrString -}}
+{{- $tableHTML := replaceRE $pattern $replacement $content -}}
+
+{{/* ---------- Theme CSS ---------- */}}
+{{- $themeCSS := "" -}}
+{{- if $theme -}}
+  {{- $themePath := printf "css/datatables/datatables-%s.css" $theme -}}
+  {{- if (fileExists (printf "assets/%s" $themePath)) -}}
+    {{- $themeCSS = printf "<link rel=\"stylesheet\" href=\"/%s\">" $themePath -}}
+  {{- else if (fileExists (printf "static/%s" $themePath)) -}}
+    {{- $themeCSS = printf "<link rel=\"stylesheet\" href=\"/%s\">" $themePath -}}
+  {{- end -}}
+{{- end -}}
+
+{{/* ---------- JSON normalization ---------- */}}
+{{- if $json -}}
+  {{- $parsed := $json -}}
+  {{- if eq (printf "%T" $json) "string" -}}
+    {{- $parsed = transform.Unmarshal $json -}}
+  {{- end -}}
+
+  {{- $cfg := dict -}}
+  {{- $type := printf "%T" $parsed -}}
+  {{- $isArray := eq (printf "%T" $parsed) "[]interface {}" -}}
+  {{- if $isArray -}}
+    {{- $cfg = dict "data" $parsed -}}
+  {{- else -}}
+    {{- /* if it’s an object with a top-level data key, use that; otherwise wrap the whole thing */ -}}
+    {{- if isset $parsed "data" -}}
+      {{- $cfg = $parsed -}}
+    {{- else -}}
+      {{- $cfg = dict "data" (slice $parsed) -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{/* ---------- Determine keys & order ---------- */}}
+  {{- $data := slice -}}
+  {{- if (isset $cfg "data") -}}
+    {{- $data = index $cfg "data" -}}
+  {{- end -}}
+
+  {{- $keys := slice -}}
+  {{- if gt (len $data) 0 -}}
+    {{- $first := index $data 0 -}}
+    {{- range $k, $_ := $first -}}
+      {{- $keys = $keys | append (printf "%v" $k) -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $columns := slice -}}
+  {{- $ths := findRE "(?is)<th[^>]*>.*?</th>" $tableHTML -}}
+
+  {{- if gt (len $columnsList) 0 -}}
+    {{- /* columns param order takes precedence */ -}}
+    {{- range $columnsList -}}
+      {{- $col := . -}}
+      {{- $colKey := "" -}}
+      {{- range $keys -}}
+        {{- if eq (lower (trim . " \t\r\n")) (lower (trim $col " \t\r\n")) -}}
+          {{- $colKey = . -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if ne $colKey "" -}}
+        {{- $columns = $columns | append (dict "data" $colKey "title" $col) -}}
+      {{- else -}}
+        {{- $columns = $columns | append (dict "data" $col "title" $col) -}}
+      {{- end -}}
+    {{- end -}}
+
+  {{- else if gt (len $ths) 0 -}}
+    {{- /* Fallback: use <th> header order */ -}}
+    {{- range $th := $ths -}}
+      {{- $label := $th | replaceRE "(?is)^<th[^>]*>\\s*(.*?)\\s*</th>$" "$1" | htmlUnescape | plainify | trim " \t\r\n" -}}
+      {{- $labelKey := "" -}}
+      {{- range $keys -}}
+        {{- if eq (lower (trim . " \t\r\n")) (lower (trim $label " \t\r\n")) -}}
+          {{- $labelKey = . -}}
+        {{- end -}}
+      {{- end -}}
+      {{- if ne $labelKey "" -}}
+        {{- $columns = $columns | append (dict "data" $labelKey "title" $label) -}}
+      {{- else -}}
+        {{- $columns = $columns | append (dict "data" $label "title" $label) -}}
+      {{- end -}}
+    {{- end -}}
+
+  {{- else -}}
+    {{- /* Final fallback: JSON key order */ -}}
+    {{- range $keys -}}
+      {{- $columns = $columns | append (dict "data" . "title" .) -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- $cfg = merge $cfg (dict "columns" $columns) -}}
+
+  {{/* ---------- Emit markup & config ---------- */}}
+  {{- printf "%s\n%s\n<script type=\"application/json\" class=\"dt-config\">%s</script>"
+      $themeCSS $tableHTML ($cfg | jsonify | safeHTML) | safeHTML -}}
+
+{{- else -}}
+  {{- /* No JSON: static table only */ -}}
+  {{- printf "%s\n%s" $themeCSS $tableHTML | safeHTML -}}
+{{- end -}}

@@ -1,0 +1,23 @@
+{
+  "name": "itw",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "mkdir -p static/webawesome && rsync -a node_modules/@awesome.me/webawesome/dist/ static/webawesome/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@awesome.me/webawesome": "^3.0.0",
+    "@fortawesome/fontawesome-free": "^7.1.0",
+    "datatables.net-dt": "^2.3.4",
+    "datatables.net-responsive-dt": "^3.0.7",
+    "mermaid": "^11.12.1"
+  },
+  "devDependencies": {
+    "postcss-cli": "^11.0.1"
+  }
+}

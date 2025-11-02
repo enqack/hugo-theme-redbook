@@ -1,0 +1,48 @@
+.sidebar {
+  width: 300px;
+  flex: 0 0 300px;
+  border-right: 5px solid $secondary-color;
+
+  @include respond-to(md) {
+    width: 100%;
+    border-right: none;
+    border-bottom: 5px solid $secondary-color;
+  }
+}
+
+.static-menu {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    .sub-menu > li > a {
+      padding: 0.25rem 0 0 1rem;
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+
+      > a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        line-height: 1.25;
+        text-decoration: none;
+        color: inherit;
+        padding: 0.25rem 0 0 0.25rem;
+      }
+    }
+  }
+
+  li > a:hover {
+    color: $secondary-color;
+    background: $highlight-color;
+  }
+
+  li.active > a {
+    color: $secondary-color;
+    background: $highlight-color;
+  }
+}

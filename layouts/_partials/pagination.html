@@ -1,0 +1,109 @@
+{{- $currentNode := . -}}
+
+{{/* Source menu_cycle from params.sidebar.menu_cycle safely */}}
+{{- $menuCycle := false -}}
+{{- with .Site.Params.sidebar.menu_cycle -}}
+  {{- $menuCycle = . -}}
+{{- end -}}
+
+{{/* Reset scratch keys used by pagination before we traverse */}}
+{{- $currentNode.Scratch.Delete "prevPage" -}}
+{{- $currentNode.Scratch.Delete "nextPage" -}}
+{{- $currentNode.Scratch.Delete "prevPageTmp" -}}
+{{- $currentNode.Scratch.Delete "NextPageOK" -}}
+{{- $currentNode.Scratch.Delete "firstEligible" -}}
+{{- $currentNode.Scratch.Delete "lastEligible" -}}
+
+<nav class="pagination">
+  {{- template "pagination" dict
+      "menu"            .Site.Home
+      "currentnode"     $currentNode
+      "menu_exclusion"  .Site.Params.menu_exclusion
+      "menu_cycle"      $menuCycle
+  -}}
+
+  {{/* ---------- POST-TRAVERSAL WRAP-AROUND ---------- */}}
+  {{- if $menuCycle -}}
+    {{- /* If we never set prevPage (e.g., on Home or first item), wrap to last eligible */ -}}
+    {{- if not ($currentNode.Scratch.Get "prevPage") -}}
+      {{- $currentNode.Scratch.Set "prevPage" ($currentNode.Scratch.Get "lastEligible") -}}
+    {{- end -}}
+
+    {{- /* If we never found a next after current, wrap to first eligible */ -}}
+    {{- if eq ($currentNode.Scratch.Get "NextPageOK") "OK" -}}
+      {{- $currentNode.Scratch.Set "nextPage" ($currentNode.Scratch.Get "firstEligible") -}}
+      {{- $currentNode.Scratch.Set "NextPageOK" nil -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- with ($.Scratch.Get "prevPage") -}}
+    <a class="nav nav-prev" href="{{ .Permalink }}" title="{{ .Title }}">
+      <wa-icon slot="start" name="arrow-left" aria-hidden="true"></wa-icon>
+      Prev - {{ .Title }}
+    </a>
+  {{- end -}}
+  {{- with ($.Scratch.Get "nextPage") -}}
+    <a class="nav nav-next" href="{{ .Permalink }}" title="{{ .Title }}">
+      Next - {{ .Title }} <wa-icon slot="start" name="arrow-right" aria-hidden="true"></wa-icon>
+    </a>
+  {{- end }}
+</nav>
+
+{{- define "pagination" -}}
+  {{- $currentNode    := .currentnode -}}
+  {{- $menu_exclusion := .menu_exclusion -}}
+  {{- $menu_cycle     := .menu_cycle | default false -}}
+
+  {{- /* Build effective child collection (sections or pages+sections) */ -}}
+  {{- $pages := .menu.Pages -}}
+  {{- if .menu.IsHome -}}
+    {{- $pages = .menu.Sections -}}
+  {{- else if .menu.Sections -}}
+    {{- $pages = (.menu.Pages | union .menu.Sections) -}}
+  {{- end -}}
+
+  {{- /* Track first/last eligible (non-excluded) during traversal */ -}}
+  {{- if not (in $menu_exclusion .menu.Section) -}}
+    {{- if not ($currentNode.Scratch.Get "firstEligible") -}}
+      {{- $currentNode.Scratch.Set "firstEligible" .menu -}}
+    {{- end -}}
+    {{- $currentNode.Scratch.Set "lastEligible" .menu -}}
+  {{- end -}}
+
+  {{- /* EXACT MATCH for current page */ -}}
+  {{- if eq $currentNode.Permalink .menu.Permalink -}}
+    {{- /* Finalize prev for current; Home + no cycle => nil, else use the last seen eligible */ -}}
+    {{- if and .menu.IsHome (not $menu_cycle) -}}
+      {{- $currentNode.Scratch.Set "prevPage" nil -}}
+    {{- else -}}
+      {{- $currentNode.Scratch.Set "prevPage" ($currentNode.Scratch.Get "prevPageTmp") -}}
+    {{- end -}}
+
+    {{- /* Signal that the next eligible visited item becomes nextPage */ -}}
+    {{- $currentNode.Scratch.Set "NextPageOK" "OK" -}}
+
+  {{- else -}}
+    {{- /* If we've just passed current, the next eligible becomes nextPage */ -}}
+    {{- if eq ($currentNode.Scratch.Get "NextPageOK") "OK" -}}
+      {{- $currentNode.Scratch.Set "NextPageOK" nil -}}
+      {{- if not (in $menu_exclusion .menu.Section) -}}
+        {{- $currentNode.Scratch.Set "nextPage" .menu -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+
+  {{- /* Only record prevPageTmp for NON-EXCLUDED items */ -}}
+  {{- if not (in $menu_exclusion .menu.Section) -}}
+    {{- $currentNode.Scratch.Set "prevPageTmp" .menu -}}
+  {{- end -}}
+
+  {{- /* Depth-first traversal by weight */ -}}
+  {{- range $pages.ByWeight -}}
+    {{- template "pagination" dict
+        "menu"            .
+        "currentnode"     $currentNode
+        "menu_exclusion"  $menu_exclusion
+        "menu_cycle"      $menu_cycle
+    -}}
+  {{- end -}}
+{{- end -}}

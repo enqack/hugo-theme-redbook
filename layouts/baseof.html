@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html class="wa-theme-default wa-palette-default" lang="{{ site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+<head>
+  {{ partial "head.html" . }}
+</head>
+<body>
+  <header>
+    {{ partial "header.html" . }}
+  </header>
+  <div class="split-panel">
+    {{ partial "sidebar.html" . }}
+    <main>
+      {{ block "main" . }}{{ end }}
+      {{ partial "page-meta.html" . }}
+      {{ partial "pagination.html" . }}
+      <a id="backtotop-fixed"
+        data-backtotop-fixed-scroll-offset="200"
+        data-backtotop-fixed-display="bottom-right">
+          <wa-icon slot="start" name="arrow-up"></wa-icon> Go to top
+      </a>
+    </main>
+  </div>
+  <footer>
+    {{ partial "footer.html" . }}
+  </footer>
+  {{ if .Param "mermaid" }}
+    {{ partialCached "mermaid/scripts.html" . }}
+  {{ end }}
+  {{ if .Param "math" }}
+    {{ partialCached "math.html" . }}
+  {{ end }}
+</body>
+</html>

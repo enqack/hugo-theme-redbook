@@ -1,0 +1,5 @@
+<div class="page-meta">
+    {{ partial "last-updated.html" . }}
+    <i>{{ partial "terms.html" (dict "taxonomy" "categories" "page" .) }}</i>
+    <i>{{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}</i>
+</div>

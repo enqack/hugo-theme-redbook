@@ -1,0 +1,14 @@
+{{ $rootdir := resources.Match "css/*.css" }}
+{{ $subdir := resources.Match "css/**/*.css" }}
+{{ $all := $rootdir | append $subdir }}
+{{ $sorted := sort $all "Name" }}
+
+{{ $main := resources.Get "scss/main.scss" | toCSS }}
+
+{{ $stack := $sorted | append $main }}
+
+{{ if gt (len $stack) 0 }}
+  {{ $bundle := $stack | resources.Concat "css/bundle.css" }}
+  {{ if hugo.IsProduction }}{{ $bundle = $bundle | resources.Minify | resources.Fingerprint }}{{ end }}
+  <link rel="stylesheet" href="{{ $bundle.RelPermalink }}" {{ if hugo.IsProduction }}integrity="{{ $bundle.Data.Integrity }}" crossorigin="anonymous"{{ end }}>
+{{ end }}

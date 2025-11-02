@@ -1,0 +1,90 @@
+@import "variables";
+
+body {
+  color: $primary-color;
+  background-color: $quaternary-color;
+  font-family: $default-font-family;
+  line-height: 1.5;
+  margin: 0;
+
+  scrollbar-color: $secondary-color $primary-color;
+  scrollbar-width: 10px;
+  --scrollbar-color-track: $primary-color;
+  --scrollbar-color-thumb: $secondary-color;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: $primary-color;
+  border-left-width: 2px;
+  border-left-style: solid;
+  border-left-color: $secondary-color;
+  -webkit-box-shadow: inset 0 0 2px $tertiary-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $secondary-color;
+}
+
+@import "header";
+@import "nav";
+@import "sidebar";
+@import "footer";
+@import "pagination";
+
+main {
+  padding: 1rem 1rem 2rem 1rem;
+  width: 100vw;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: underline;
+
+  &:hover {
+    color: $secondary-color;
+  }
+}
+
+thead {
+  background-color: $highlight-color;
+  border-bottom: 2px solid $secondary-color;
+}
+
+.datetime {
+  margin-bottom: 0.25rem;
+}
+
+time {
+  margin-inline-start: 1.125em;
+}
+
+.page-meta {
+  margin-top: 2rem;
+
+  p {
+    padding: 0;
+    margin: 0;
+  }
+
+  .terms {
+    > ul,
+    > ul > li {
+      display: inline-block;
+    }
+    > ul > li {
+      margin-left: 0.25rem;
+    }
+    > ul > li:first-child {
+      margin-left: 0 !important;
+    }
+  }
+}
+
+.split-panel {
+  display: flex;
+  
+  @include respond-to(md) {
+    display: block;
+  }
+}

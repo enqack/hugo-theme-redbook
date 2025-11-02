@@ -1,0 +1,49 @@
+baseURL: "https://example.org/"
+languageCode: "en-US"
+title: "My New Hugo Site With ITW Theme"
+
+menus:
+  main:
+    - name: "Home"
+      pageRef: "/"
+      weight: 10
+    - name: "Categories"
+      pageRef: "/categories"
+      weight: 20
+    - name: "Tags"
+      pageRef: "/tags"
+      weight: 30
+
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+          - - '\['
+            - '\]'
+          - - $$
+            - $$
+          inline:
+          - - '\('
+            - '\)'
+        enable: true
+
+module:
+  hugoVersion:
+    extended: true
+    min: "0.146.0"
+
+  mounts:
+    - source: "layouts"
+      target: "layouts"
+    - source: "assets"
+      target: "assets"
+    - source: "static"
+      target: "static"
+    - source: "archetypes"
+      target: "archetypes"
+    - source: "../../node_modules/@awesome.me/webawesome/dist-cdn/styles"
+      target: "assets/css"
+    - source: "../../node_modules/datatables.net-dt/css"
+      target: "assets/css"

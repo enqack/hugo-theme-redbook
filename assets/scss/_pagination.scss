@@ -1,0 +1,23 @@
+.pagination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.5rem;
+  
+  a {
+    margin-top: auto;
+    color: $tertiary-color;
+    text-decoration: underline;
+  }
+
+  a:only-child.nav-next {
+    margin-left: auto;
+    margin-right: 0;
+  }
+   
+  a:only-child.nav-prev {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}

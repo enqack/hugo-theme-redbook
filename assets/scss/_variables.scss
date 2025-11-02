@@ -1,0 +1,43 @@
+$primary-color: #222;
+$secondary-color: #8C051A;
+$tertiary-color: #000;
+$quaternary-color: #faf3e0;
+$pre-color: rgba(110, 110, 110, 0.25);
+$highlight-color: $pre-color;
+
+$black: #000;
+$white: #fff;
+$color01: #222;
+$color02: #012023;
+$color03: #09103e;
+$color04: #801e53;
+$color05: #651d95;
+$color06: #8C051A;
+
+$default-font-family: -apple-system, BlinkMacSystemFont, YuGothic, Meiryo, "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$code-font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace !default;
+
+$circle-radius: 25px;
+
+// Responsive Breakpoints
+$breakpoints: (
+  xs: 480px,   // Mobile
+  sm: 640px,   // Small tablet
+  md: 768px,   // Tablet
+  lg: 1024px,  // Laptop
+  xl: 1280px,  // Desktop
+  xxl: 1536px  // Large screens
+);
+
+// Mixin to handle media queries
+@mixin respond-to($breakpoint) {
+  $value: map-get($breakpoints, $breakpoint);
+
+  @if $value {
+    @media (max-width: $value) {
+      @content;
+    }
+  } @else {
+    @warn "Unknown breakpoint: `#{$breakpoint}`. Available: #{map-keys($breakpoints)}.";
+  }
+}
