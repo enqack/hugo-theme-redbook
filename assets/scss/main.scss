@@ -64,21 +64,17 @@ blockquote {
   border-inline-start-color: $secondary-color;
 }
 
-table {
-  border-top-left-radius: $radius-default;
-  border-top-right-radius: $radius-default;
-}
-
 thead {
   background-color: $highlight-color;
   border-bottom: $border-small solid $secondary-color;
 }
 
-th:first-child {
-    border-top-left-radius: $radius-default; 
+tr th:first-child {
+  border-top-left-radius: $radius-default; 
 }
-th:last-child {
-    border-top-right-radius: $radius-default; 
+
+tr th:last-child {
+  border-top-right-radius: $radius-default; 
 }
 
 .datetime {
