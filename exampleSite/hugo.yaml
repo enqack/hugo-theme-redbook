@@ -4,6 +4,7 @@ title: "My New Hugo exmapleSite With Redbook Theme"
 description: "A minimal documentation theme"
  
 theme: ../..
+
 menus:
   main:
     - name: "Home"
@@ -44,8 +45,6 @@ module:
       target: "assets/css"
     - source: "node_modules/datatables.net-dt/css"
       target: "assets/css"
-
-###################
 
 markup:
   _merge: deep
