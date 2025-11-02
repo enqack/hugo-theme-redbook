@@ -40,17 +40,9 @@ module:
     min: "0.146.0"
 
   mounts:
-    - source: "layouts"
-      target: "layouts"
-    - source: "assets"
-      target: "assets"
-    - source: "static"
-      target: "static"
-    - source: "archetypes"
-      target: "archetypes"
-    - source: "../../node_modules/@awesome.me/webawesome/dist-cdn/styles"
+    - source: "node_modules/@awesome.me/webawesome/dist-cdn/styles"
       target: "assets/css"
-    - source: "../../node_modules/datatables.net-dt/css"
+    - source: "node_modules/datatables.net-dt/css"
       target: "assets/css"
 
 ###################
@@ -59,7 +51,7 @@ markup:
   _merge: deep
   
 params:
-  github_repository: https://github.com/hellfonic/industrial-trancewave-website
+  github_repository: https://github.com/enqack/hugo-theme-redbook
   version: v1
   sidebar:
     enabled: true

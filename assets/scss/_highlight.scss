@@ -25,10 +25,6 @@ $rrt-lightgray: #e5e5e5;
   color: $rrt-fg;
   background-color: $rrt-bg;
 
-  .x {}
-  .err {}
-  .cl {}
-
   .lnlinks { outline: none; text-decoration: none; color: inherit; }
 
   .lntd,
@@ -118,11 +114,4 @@ $rrt-lightgray: #e5e5e5;
   .gi { color: $rrt-green; }
   .gs { font-weight: bold; }
   .gu { color: $rrt-blue; font-weight: bold; }
-
-  /* Misc */
-  .go {}
-  .gp {}
-  .gl {}
-  .gt {}
-  .w {}
 }
