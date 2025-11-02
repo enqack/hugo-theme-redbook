@@ -4,5 +4,6 @@
   </div>
   {{- .Page.Store.Set "hasMermaid" true -}}
 {{- else -}}
-  <pre><code class="language-{{ .Type | default "text" }}">{{ .Inner | htmlEscape }}</code></pre>
+  {{- $opts := dict "noClasses" false "guessSyntax" true "lineNos" false -}}
+  {{- transform.Highlight .Inner (.Type | default "") $opts | safeHTML -}}
 {{- end -}}

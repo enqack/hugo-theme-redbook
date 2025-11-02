@@ -1,4 +1,4 @@
-# ITW Theme
+# Redbook Theme
 
 ## Set-up
 

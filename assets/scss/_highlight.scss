@@ -1,0 +1,128 @@
+/* RRT Chroma Theme (SCSS version) */
+
+$rrt-bg: #222;
+$rrt-fg: #f8f8f2;
+$rrt-line-num: #7c7c79;
+$rrt-highlight: #191919;
+
+// palette
+$rrt-red: #f00;
+$rrt-green: #0f0;
+$rrt-blue: #87ceeb;
+$rrt-purple: #ee82ee;
+$rrt-yellow: #ff0;
+$rrt-orange: #f60;
+$rrt-cyan: #7fffd4;
+$rrt-sand: #eedd82;
+$rrt-lightgray: #e5e5e5;
+
+.bg {
+  color: $rrt-fg;
+  background-color: $rrt-bg;
+}
+
+.chroma {
+  color: $rrt-fg;
+  background-color: $rrt-bg;
+
+  .x {}
+  .err {}
+  .cl {}
+
+  .lnlinks { outline: none; text-decoration: none; color: inherit; }
+
+  .lntd,
+  .lntable {
+    vertical-align: top;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  .lntable { border-spacing: 0; }
+
+  .hl { background-color: $rrt-highlight; }
+
+  .lnt,
+  .ln {
+    white-space: pre;
+    -webkit-user-select: none;
+    user-select: none;
+    margin-right: 0.4em;
+    padding: 0 0.4em;
+    color: $rrt-line-num;
+  }
+
+  .line { display: flex; }
+
+  /* Keywords */
+  .k,
+  .kc,
+  .kd,
+  .kn,
+  .kp,
+  .kr { color: $rrt-red; }
+
+  .kt { color: $rrt-purple; }
+
+  /* Names */
+  .no { color: $rrt-cyan; }
+  .nv,
+  .vc,
+  .vg,
+  .vi,
+  .vm { color: $rrt-sand; }
+  .nf,
+  .fm { color: $rrt-yellow; }
+
+  /* Strings */
+  .s,
+  .sa,
+  .sb,
+  .sc,
+  .sd,
+  .s1,
+  .s2,
+  .se,
+  .sh,
+  .si,
+  .sr,
+  .sx,
+  .dl { color: $rrt-blue; }
+
+  .ss { color: $rrt-orange; }
+
+  /* Numbers */
+  .m,
+  .mb,
+  .mf,
+  .mh,
+  .mi,
+  .il,
+  .mo { color: $rrt-orange; }
+
+  /* Comments */
+  .c,
+  .ch,
+  .cm,
+  .c1,
+  .cs { color: $rrt-green; }
+
+  .cp,
+  .cpf { color: $rrt-lightgray; }
+
+  /* Generics */
+  .gd { color: $rrt-red; }
+  .ge { font-style: italic; }
+  .gh { color: $rrt-yellow; font-weight: bold; }
+  .gi { color: $rrt-green; }
+  .gs { font-weight: bold; }
+  .gu { color: $rrt-blue; font-weight: bold; }
+
+  /* Misc */
+  .go {}
+  .gp {}
+  .gl {}
+  .gt {}
+  .w {}
+}

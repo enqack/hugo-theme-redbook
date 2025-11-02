@@ -1,4 +1,12 @@
 {{ define "main" }}
   <h1>{{ .Title }}</h1>
   {{ .Content }}
+  {{ if not .Content }}
+    {{ range .Pages }}
+    <div class="section-item">
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+      <div>{{ .Description }}</div> 
+    </div>
+    {{ end }}
+  {{ end }}
 {{ end }}

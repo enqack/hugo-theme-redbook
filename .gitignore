@@ -2,6 +2,17 @@
 /public/
 /resources/
 /hugo_stats.json
+.hugo_build.lock
+
+# Only keep basic files; no build output
+exampleSite/*
+!exampleSite/
+!exampleSite/content/
+!exampleSite/static/
+!exampleSite/hugo.yaml
+
+# Hugo themes (if you use Git submodules, remove /themes/)
+themes/*
 
 # Build artifacts
 *.log
@@ -10,9 +21,6 @@
 *.swp
 *.DS_Store
 Thumbs.db
-
-# Hugo themes (if you use Git submodules, remove /themes/)
-themes/*
 
 # Node-related (if using npm/yarn for pipelines)
 node_modules/

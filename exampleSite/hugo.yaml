@@ -1,7 +1,9 @@
 baseURL: "https://example.org/"
 languageCode: "en-US"
-title: "My New Hugo Site With Redbook Theme"
-
+title: "My New Hugo exmapleSite With Redbook Theme"
+description: "A minimal documentation theme"
+ 
+theme: ../..
 menus:
   main:
     - name: "Home"
@@ -50,3 +52,21 @@ module:
       target: "assets/css"
     - source: "../../node_modules/datatables.net-dt/css"
       target: "assets/css"
+
+###################
+
+markup:
+  _merge: deep
+  
+params:
+  github_repository: https://github.com/hellfonic/industrial-trancewave-website
+  version: v1
+  sidebar:
+    enabled: true
+    menu_style: static-menu
+    menu_cycle: true
+    hide_pages_in_sections: ["posts"]
+    # (Optional) Collapse entire sections to just the section link (no children at all).
+    collapse_sections: []
+  math: true
+  mermaid: true

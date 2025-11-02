@@ -1,0 +1,28 @@
+name: "Redbook"
+license: "BSD-3-Clause"
+licenselink: "https://opensource.org/license/bsd-3-clause"
+description: "A minimal, fast, and flexible Hugo theme for content-driven sites."
+homepage: "https://github.com/enqack/hugo-theme-redbook"
+repo: "https://github.com/enqack/hugo-theme-redbook"
+tags:
+  - documentation
+  - minimal
+  - responsive
+features:
+  - math
+  - mermaid
+  - webawesome
+min_version: "0.146.0"
+
+author:
+  name: "enqack"
+  homepage: "https://enqack.net"
+  email: "enqack@gmail.com"
+
+# demo: "https://example.com/demo"
+
+includes:
+  - layouts/
+  - assets/
+  - static/
+  - archetypes/

@@ -1,4 +1,5 @@
 @import "variables";
+@import "highlight";
 
 body {
   color: $primary-color;
@@ -32,6 +33,14 @@ body {
 @import "footer";
 @import "pagination";
 
+.post-title {
+  margin: 0.125rem 0;
+}
+
+.section-item {
+  padding: 0.25rem 0;
+}
+
 main {
   padding: 1rem 1rem 2rem 1rem;
   width: 100vw;
@@ -58,6 +67,11 @@ thead {
 time {
   margin-inline-start: 1.125em;
 }
+
+.highlight {
+  margin-block-end: 24px;
+}
+
 
 .page-meta {
   margin-top: 2rem;
@@ -88,3 +102,5 @@ time {
     display: block;
   }
 }
+
+@import "overrides";

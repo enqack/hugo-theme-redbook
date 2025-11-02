@@ -1,0 +1,123 @@
+---
+title: Webawesome
+tags:
+  - examples
+  - features
+categories:
+  - showcase
+  - "Themes Example Content"
+---
+
+<wa-button-group label="Alignment">
+  <wa-button>Left</wa-button>
+  <wa-button>Center</wa-button>
+  <wa-button>Right</wa-button>
+</wa-button-group>
+
+<br /><br />
+
+<wa-button-group orientation="vertical" label="Options">
+  <wa-button>
+    <wa-icon slot="start" name="plus"></wa-icon>
+    New
+  </wa-button>
+  <wa-button>
+    <wa-icon slot="start" name="folder-open"></wa-icon>
+    Open
+  </wa-button>
+  <wa-button>
+    <wa-icon slot="start" name="save"></wa-icon>
+    Save
+  </wa-button>
+  <wa-button>
+    <wa-icon slot="start" name="print"></wa-icon>
+    Print
+  </wa-button>
+</wa-button-group>
+
+<br /><br />
+
+<div class="button-group-toolbar">
+  <wa-button-group label="History">
+    <wa-button id="undo-button"><wa-icon name="undo" variant="solid" label="Undo"></wa-icon></wa-button>
+    <wa-button id="redo-button"><wa-icon name="redo" variant="solid" label="Redo"></wa-icon></wa-button>
+  </wa-button-group>
+
+  <wa-button-group label="Formatting">
+    <wa-button id="button-bold"><wa-icon name="bold" variant="solid" label="Bold"></wa-icon></wa-button>
+    <wa-button id="button-italic"><wa-icon name="italic" variant="solid" label="Italic"></wa-icon></wa-button>
+    <wa-button id="button-underline"><wa-icon name="underline" variant="solid" label="Underline"></wa-icon></wa-button>
+  </wa-button-group>
+
+  <wa-button-group label="Alignment">
+    <wa-button id="button-align-left">
+      <wa-icon name="align-left" variant="solid" label="Align Left"></wa-icon>
+    </wa-button>
+    <wa-button id="button-align-center">
+      <wa-icon name="align-center" variant="solid" label="Align Center"></wa-icon>
+    </wa-button>
+    <wa-button id="button-align-right">
+      <wa-icon name="align-right" variant="solid" label="Align Right"></wa-icon>
+    </wa-button>
+  </wa-button-group>
+</div>
+
+<wa-tooltip for="undo-button">Undo</wa-tooltip>
+<wa-tooltip for="redo-button">Redo</wa-tooltip>
+<wa-tooltip for="button-bold">Bold</wa-tooltip>
+<wa-tooltip for="button-italic">Italic</wa-tooltip>
+<wa-tooltip for="button-underline">Underline</wa-tooltip>
+
+<wa-tooltip for="button-align-left">Align Left</wa-tooltip>
+<wa-tooltip for="button-align-center">Align Center</wa-tooltip>
+<wa-tooltip for="button-align-right">Align Right</wa-tooltip>
+
+<style>
+  .button-group-toolbar wa-button-group:not(:last-of-type) {
+    margin-right: var(--wa-space-xs);
+  }
+</style>
+
+<br /><br />
+
+<div class="wa-stack">
+  <div class="wa-gap-2xs">
+    <wa-button appearance="accent" variant="neutral">Accent</wa-button>
+    <wa-button appearance="filled-outlined" variant="neutral">Filled-Outlined</wa-button>
+    <wa-button appearance="filled" variant="neutral">Filled</wa-button>
+    <wa-button appearance="outlined" variant="neutral">Outlined</wa-button>
+    <wa-button appearance="plain" variant="neutral">Plain</wa-button>
+  </div>
+  <div class="wa-gap-2xs">
+    <wa-button appearance="accent" variant="brand">Accent</wa-button>
+    <wa-button appearance="filled-outlined" variant="brand">Filled-Outlined</wa-button>
+    <wa-button appearance="filled" variant="brand">Filled</wa-button>
+    <wa-button appearance="outlined" variant="brand">Outlined</wa-button>
+    <wa-button appearance="plain" variant="brand">Plain</wa-button>
+  </div>
+  <div class="wa-gap-2xs">
+    <wa-button appearance="accent" variant="success">Accent</wa-button>
+    <wa-button appearance="filled-outlined" variant="success">Filled-Outlined</wa-button>
+    <wa-button appearance="filled" variant="success">Filled</wa-button>
+    <wa-button appearance="outlined" variant="success">Outlined</wa-button>
+    <wa-button appearance="plain" variant="success">Plain</wa-button>
+  </div>
+  <div class="wa-gap-2xs">
+    <wa-button appearance="accent" variant="warning">Accent</wa-button>
+    <wa-button appearance="filled-outlined" variant="warning">Filled-Outlined</wa-button>
+    <wa-button appearance="filled" variant="warning">Filled</wa-button>
+    <wa-button appearance="outlined" variant="warning">Outlined</wa-button>
+    <wa-button appearance="plain" variant="warning">Plain</wa-button>
+  </div>
+  <div class="wa-gap-2xs">
+    <wa-button appearance="accent" variant="danger">Accent</wa-button>
+    <wa-button appearance="filled-outlined" variant="danger">Filled-Outlined</wa-button>
+    <wa-button appearance="filled" variant="danger">Filled</wa-button>
+    <wa-button appearance="outlined" variant="danger">Outlined</wa-button>
+    <wa-button appearance="plain" variant="danger">Plain</wa-button>
+  </div>
+</div>
+
+<br /><br />
+
+<wa-progress-bar value="50" label="Upload progress"></wa-progress-bar>
