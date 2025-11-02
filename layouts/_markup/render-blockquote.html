@@ -1,0 +1,35 @@
+{{- $classes := dict
+  "note"      "wa-neutral"
+  "tip"       "wa-brand"
+  "important" "wa-success"
+  "warn"      "wa-warning"
+  "caution"   "wa-danger"
+-}}
+
+{{- $isAlert := eq .Type "alert" -}}
+{{- $variant := index $classes .AlertType | default "wa-brand" -}}
+
+{{ if $isAlert }}
+  {{/* .Text is already HTML. Normalize breaks to a token, then split. */}}
+  {{- $html := .Text -}}
+  {{- $html = replace $html "<br />" "\n" -}}
+  {{- $html = replace $html "<br>" "\n" -}}
+  {{- /* Turn paragraph boundaries into separators too */ -}}
+  {{- $html = replaceRE `(?is)</p>\s*<p>` "\n" $html -}}
+  {{- /* Strip outer single <p>…</p> if that’s all there is */ -}}
+  {{- $html = replaceRE `(?is)^\s*<p>(.*)</p>\s*$` "$1" $html -}}
+  {{- $parts := split $html "\n" -}}
+
+  <blockquote class="{{ if $isAlert }}alert {{ $variant }}{{ end }}">
+  {{- range $parts -}}
+    {{- $seg := . -}}
+    {{- if ne $seg "" -}}
+    <p>{{ $seg | safeHTML }}</p>
+    {{- end -}}
+  {{- end -}}
+  </blockquote>
+{{ else }}
+  <blockquote>
+    {{ .Text | safeHTML }}
+  </blockquote>
+{{ end }}

@@ -46,12 +46,17 @@ nav {
   }
 }
 
-.headerlink {
+.headinglink {
   color: $secondary-color;
   margin-left: 0.5rem;
   
   wa-icon {
-    font-size: 1.125rem;
-    vertical-align: middle;
+    vertical-align: baseline;
+  }
+}
+
+@for $i from 1 through 6 {
+  h#{$i} .headinglink wa-icon {
+    font-size: (1.75rem - ($i * (0.125rem + 0.05rem)));
   }
 }

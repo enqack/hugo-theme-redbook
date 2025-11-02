@@ -61,7 +61,18 @@ hr {
 }
 
 blockquote {
+  padding: 0.25rem 1rem;
   border-inline-start-color: $secondary-color;
+
+  &.alert {
+    background-color: var(--wa-color-fill-quiet);
+    border-right: $border-small solid var(--wa-color-border-loud);
+    border-bottom: $border-small solid var(--wa-color-border-loud);
+    border-inline-start-color: unset;
+    border-inline-start-width: 0;
+    color: var(--wa-color-on-normal);
+    border-radius: $radius-default;
+  }
 }
 
 thead {
@@ -69,12 +80,12 @@ thead {
   border-bottom: $border-small solid $secondary-color;
 }
 
-tr th:first-child {
+tr > th:first-child {
   border-top-left-radius: $radius-default; 
 }
 
-tr th:last-child {
-  border-top-right-radius: $radius-default; 
+tr > th:last-child {
+  border-top-right-radius: $radius-default;
 }
 
 .datetime {
@@ -88,7 +99,6 @@ time {
 .highlight {
   margin-block-end: 24px;
 }
-
 
 .page-meta {
   margin-top: 2rem;

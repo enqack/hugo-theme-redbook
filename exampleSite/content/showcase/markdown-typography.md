@@ -10,18 +10,20 @@ categories:
 
 ## Headings
 
-# H1 - Main Title  
-## H2 - Section Title  
-### H3 - Subsection Title  
-#### H4 - Minor Heading  
+# H1 - Main Title
+## H2 - Section Title
+### H3 - Subsection Title
+#### H4 - Minor Heading
+##### H5 - Minor Heading
+###### H6 - Minor Heading
 
 ## Paragraphs and Text Styles
 
 This is a **bold** word, this is *italic*, and this is ***bold italic***.  
 You can also use `inline code` for short code references.  
 
-> “A blockquote is for emphasizing a passage or quote.”  
-> — *Anonymous Latin Placeholder Sage*
+> "A blockquote is for emphasizing a passage or quote."  
+> -- *Anonymous Latin Placeholder Sage*
 
 ## Lists
 
@@ -40,8 +42,29 @@ You can also use `inline code` for short code references.
 ### Blockquotes
 
 > This is a blockquote. It is used to highlight quoted text or important information.
->
 > > This is a nested blockquote within the first one.
+
+#### Alerts
+
+> [!NOTE]
+> **Note**
+> This is an alert
+
+> [!TIP]
+> **Tip**
+> This is an alert
+
+> [!IMPORTANT]
+> **Important**
+> This is an alert
+
+> [!WARN]
+> **Warning**
+> This is an alert
+
+> [!CAUTION]
+> **Caution**
+> This is an alert
 
 ## Links and Images
 
