@@ -2,6 +2,9 @@ baseURL: "https://example.org/"
 languageCode: "en-US"
 title: "My New Hugo Site With Redbook Theme"
 
+params:
+  description: "A minimal documentation theme, You may have ran hugo from inside the theme."
+
 menus:
   main:
     - name: "Home"

@@ -3,9 +3,7 @@
   <div class="logo"><img src="{{ "images/logo.svg" | absURL }}"/></div>
   <div class="title">
     <h1>{{ site.Title }}</h1>
-    {{- if ne .Description "" }}
-    <span>{{ .Description }}"</span>
-    {{- else if isset .Site.Params "description" }}
+    {{- if ne .Site.Params.description "" }}
     <span>{{ .Site.Params.description }}</span>
     {{- end }}
   </div>
@@ -16,6 +14,8 @@
     <p class="version">Version {{ . }}</p>
   {{- end -}}
 </div>
+{{- if .Site.Params.header_menu }}
 <div class="menu-container">
   {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
 </div>
+{{- end -}}

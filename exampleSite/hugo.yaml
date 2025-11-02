@@ -1,7 +1,6 @@
 baseURL: "https://example.org/"
 languageCode: "en-US"
-title: "My New Hugo exmapleSite With Redbook Theme"
-description: "A minimal documentation theme"
+title: "Hugo Exmaple Site For Redbook Theme"
  
 theme: ../..
 
@@ -50,8 +49,10 @@ markup:
   _merge: deep
   
 params:
+  description: "Minimal exampleSite for Redbook theme"
   github_repository: https://github.com/enqack/hugo-theme-redbook
   version: v1
+  header_menu: true
   sidebar:
     enabled: true
     menu_style: static-menu
