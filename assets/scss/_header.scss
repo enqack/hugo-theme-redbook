@@ -5,7 +5,7 @@ header {
   align-items: center;
   background-color: $primary-color;
   color: $quaternary-color;
-  border-bottom: 5px solid $secondary-color;
+  border-bottom: $border-medium solid $secondary-color;
   margin-bottom: 0;
   padding-left: 0;
 
@@ -46,7 +46,7 @@ header {
   .menu-container {
     grid-row: 2;
     grid-column: 1 / -1;
-    border-top: 1px solid $secondary-color;  
+    border-top: $border-xxsmall solid $secondary-color;  
   }
 
   .version-container {

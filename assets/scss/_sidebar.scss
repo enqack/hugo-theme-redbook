@@ -1,12 +1,12 @@
 .sidebar {
   width: 300px;
   flex: 0 0 300px;
-  border-right: 5px solid $secondary-color;
+  border-right: $border-medium solid $secondary-color;
 
   @include respond-to(md) {
     width: 100%;
     border-right: none;
-    border-bottom: 5px solid $secondary-color;
+    border-bottom: $border-medium solid $secondary-color;
   }
 }
 

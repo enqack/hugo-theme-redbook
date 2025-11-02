@@ -34,7 +34,7 @@ nav {
   display: none;
   transition: opacity 0.4s;
 
-  border-width: 3px;
+  border-width: $border-small;
   border-color: $secondary-color transparent transparent $secondary-color;
   border-style: solid;
   border-start-start-radius: 10px;

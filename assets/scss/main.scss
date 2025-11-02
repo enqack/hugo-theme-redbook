@@ -17,10 +17,10 @@ body {
 ::-webkit-scrollbar {
   width: 10px;
   background-color: $primary-color;
-  border-left-width: 2px;
+  border-left-width: $border-xsmall;
   border-left-style: solid;
   border-left-color: $secondary-color;
-  -webkit-box-shadow: inset 0 0 2px $tertiary-color;
+  -webkit-box-shadow: inset 0 0 $border-xsmall $tertiary-color;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -55,9 +55,30 @@ a {
   }
 }
 
+hr {
+  border-color: $secondary-color;
+  border-width: $border-small;
+}
+
+blockquote {
+  border-inline-start-color: $secondary-color;
+}
+
+table {
+  border-top-left-radius: $radius-default;
+  border-top-right-radius: $radius-default;
+}
+
 thead {
   background-color: $highlight-color;
-  border-bottom: 2px solid $secondary-color;
+  border-bottom: $border-small solid $secondary-color;
+}
+
+th:first-child {
+    border-top-left-radius: $radius-default; 
+}
+th:last-child {
+    border-top-right-radius: $radius-default; 
 }
 
 .datetime {

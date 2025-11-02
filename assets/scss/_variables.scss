@@ -2,7 +2,7 @@ $primary-color: #222;
 $secondary-color: #8C051A;
 $tertiary-color: #000;
 $quaternary-color: #faf3e0;
-$pre-color: rgba(110, 110, 110, 0.25);
+$pre-color: #cecece;
 $highlight-color: $pre-color;
 
 $black: #000;
@@ -17,7 +17,13 @@ $color06: #8C051A;
 $default-font-family: -apple-system, BlinkMacSystemFont, YuGothic, Meiryo, "Helvetica Neue", HelveticaNeue, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $code-font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace !default;
 
-$circle-radius: 25px;
+$radius-default: 5px;
+
+$border-xxsmall: 1px;
+$border-xsmall: 2px;
+$border-small: 3px;
+$border-medium: 5px;
+$border-large: 10px;
 
 // Responsive Breakpoints
 $breakpoints: (
